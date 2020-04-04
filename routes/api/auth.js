@@ -4,22 +4,22 @@ const bcrypt =require('bcryptjs');
 const config =require('config');
 const jwt= require('jsonwebtoken');
 const auth=require('../../middleware/auth');
-//Item Model
-const User=require('../../models/Users');
-//@route post api/auth
-//@desc auth user
+//User Model
+const Users=require('../../models/Users');
+//@route post api/users
+//@desc register new user
 //@access Public
 router.post('/',(req,res) => {
     const {email,password}=req.body;
 
-    if(!email || !password){
-      return res.status(400).json({ msg : 'Please enter all fields'});
+    if( !email|| !password){
+      return  (res.status(400).json({ msg : 'Please enter all fields'}));
 
     }
 
-    User.findOne({email})
+    Users.findOne({email})
     .then(user => {
-        if(!user) return res.status(400).json({msg : 'User doesnot exists'});
+        if(!user) return res.status(400).json({msg : 'User doesnot exist'});
         
         bcrypt.compare(password,user.password)
         .then(isMatch => {

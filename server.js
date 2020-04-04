@@ -2,20 +2,23 @@ const express = require('express');
 const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 
-const bodyPasrer = require('body-parser');
+//const bodyPasrer = require('body-parser');
 
 const items=require('./routes/api/items');
 const users=require('./routes/api/users');
 const auth=require('./routes/api/auth');
+//const WelcomePage=require('./routes/WelcomePage');
 const app = express();
 const config=require('config');
 const path=require('path'); 
+//const AppNavbar=require('./routes/AppNavbar');
 
 //Body parser middleware
-app.use(bodyPasrer.json());
+app.use(express.json());
+
 
 //DB config
-//const db = require('./config/keys').mongoURI;
+//const db = require('./config/default').mongoURI;
 const db = config.get('mongoURI');
 //const uri = require
 //connect to mongo
@@ -33,12 +36,13 @@ mongoose.connect(db,{
 app.use('/api/items',items);
 app.use('/api/users',users);
 app.use('/api/auth',auth);
+//app.use('./routes/AppNavbar',AppNavbar)
 
 //Serve static assets if in production
 if(process.env.NODE_ENV=='production'){
     //set static folder
     app.use(express.static('client/build'));
-    app.get('*',(req,res)=>{
+    app.get('/',(req,res)=>{
       res.sendFile(path.resolve(__dirname,'client','build','index.html')); 
 
     });
@@ -47,5 +51,5 @@ if(process.env.NODE_ENV=='production'){
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log('server started on ${port}'));
+app.listen(port, () => console.log('server started on $`{port}`'));
 
