@@ -49,11 +49,11 @@ loading:PropTypes.bool,
       this.setState({msg:null});
       }
     }
-  //if(this.state.modal){
+if(this.state.modal){
   //    if authenticated close MODAL
-    //  if(isAuthenticated){
-      //  this.toggle();
-  //}}
+     if(this.props.loading){
+        this.toggle();
+ }}
   }
  
  
@@ -84,7 +84,8 @@ onSubmit=e=>{
 // attempt to login
 this.props.addVelocities(newItem);
   //close modal
-this.toggle();
+
+ 
 };
 render(){
    // const { velocities } =this.props.velocity; 
