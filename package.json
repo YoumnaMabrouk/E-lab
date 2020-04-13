@@ -27,10 +27,8 @@
     "mongoose": "^5.9.5",
     "nodejs": "0.0.0",
     "redux-devtools-extension": "^2.13.8"
-  
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
   }
- 
 }

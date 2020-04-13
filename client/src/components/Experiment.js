@@ -1,4 +1,4 @@
-import React,{Component,Fragment} from 'react';
+import React,{Component,Fragment,useState} from 'react';
 import {Link,withRouter} from 'react-router-dom';
 import {
     Collapse,
@@ -14,7 +14,12 @@ import {
     FormGroup,
     Label,
     Input,
-    Alert
+    Alert,
+    Card,
+    CardBody,
+    UncontrolledCollapse,
+    CardTitle,
+    CardText
   } from 'reactstrap';
   import {connect} from 'react-redux';
   import PropTypes from 'prop-types';
@@ -24,12 +29,27 @@ import {
   import {WelcomePage} from './WelcomePage';
 
   class Experiment extends Component{
-  
+    static propTypes={
+      isAuthenticated:PropTypes.bool,
+     auth :PropTypes .object.isRequired
+    }
+
+    toggle =() => {
+      this.setState({
+        modal:!this.state.modal  
+      });
+  };
+
     render(){
-        
+      //const [isOpen, setIsOpen] = useState(false);
+      const { isAuthenticated} =this.props.auth;
+   // const toggle = () => setIsOpen(!isOpen);  
         return ( 
             
-            <div>
+            <div  style={{
+              backgroundColor: 'lightgrey',
+              backgroundSize: "cover"
+            }}>
                 <p>
                 <Link to="/" >
                     Home
@@ -37,21 +57,37 @@ import {
                   </p>
                   <Navbar color="dark" dark expand="l" className="mb-5">
              
-              <Container>
+             
                 
             <NavbarBrand href="/">Experiment</NavbarBrand>
-                  <NavItem>
+              
              <Logout/>
-            </NavItem>
-                  
-              </Container>
+           
+             
             </Navbar>
-                  
-    
-   
-<Button  color='dark' style={{marginTop:'2rem'}} block>Graphs</Button>
-<Button  color='dark' style={{marginTop:'2rem'}} block>Results</Button>
-   
+            <Card body>
+                <CardTitle>Video broadcast:
+                </CardTitle>
+                <CardText>
+
+                </CardText>
+              </Card>
+<Button  color='dark' style={{marginTop:'2rem'}} block id="toggler">Graphs</Button>
+<UncontrolledCollapse toggler="#toggler">
+        <Card>
+          <CardBody>
+         Will be put here
+          </CardBody>
+        </Card>
+      </UncontrolledCollapse>
+<Button  color='dark' style={{marginTop:'2rem'}} block id="toggle">Results</Button>
+<UncontrolledCollapse toggler="#toggle">
+        <Card>
+          <CardBody>
+         Will be put here :)
+          </CardBody>
+        </Card>
+      </UncontrolledCollapse>
 </div>
 );
 }}
@@ -63,8 +99,13 @@ import {
     auth:state.auth
   });*/
 //export default connect (mapStateToProps ,null)(withRouter(Velocity));
-export default (Experiment);
-
+//export default (Experiment);
+const mapStateToProps = (state )=> ({
+  auth:state.auth,
+  isAuthenticated:state.auth.isAuthenticated
+  });
+//export default connect (mapStateToProps ,null)(withRouter(Velocity));
+export default connect(mapStateToProps ,null) (withRouter(Experiment));
 
 
 

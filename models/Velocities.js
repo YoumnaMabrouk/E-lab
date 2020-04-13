@@ -1,24 +1,24 @@
-onst mongoose=require('mongoose');
+const mongoose=require('mongoose');
 const Schema=mongoose.Schema;
 
 const VelocitySchema = new Schema({
     Velocity1:{
-        type : String,
+        type : Number,
         required: true,
         
     },
     Velocity2:{
-        type : String,
+        type : Number,
         required: true,
        
     },
     Velocity3:{
-        type : String,
+        type : Number,
         required: true
     },
     date:{ type : Date,
         default:Date.now}
 });
     
-    module.exports=Velocity=mongoose.model('velocity',  VelocitySchema);
+    module.exports=Velocities=mongoose.model('velocity',VelocitySchema);
     

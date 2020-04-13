@@ -22,4 +22,4 @@ password:{
  default:Date.now}
 });
 
-module.exports=User=mongoose.model('user',UserSchema);
+module.exports=Users=mongoose.model('user',UserSchema);

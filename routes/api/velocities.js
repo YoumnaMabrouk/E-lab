@@ -3,9 +3,9 @@ const router =express.Router();
 const auth=require('../../middleware/auth');
 
 //Item Model
-const Item =require('../../models/Velocities');
+const  Velocities=require('../../models/Velocities');
 //@route get api/velocities
-//@desc get all Items
+//@desc get all velocities
 //@access Public
 router.get('/',(req,res) => {
     Velocities.find()
@@ -14,33 +14,40 @@ router.get('/',(req,res) => {
 });
 
 //@route post api/velocities
-//@desc creaye a post
+//@desc create a post
 //@access private
-router.post('/',auth,(req,res) => {
-    const newVelocity =new Velocities({
-       Velocity1:req.body.Velocity1,
-       Velocity2:req.body.Velocity2,
-       Velocity3:req.body.Velocity3;});
-       if( !Velocity1|| ! Velocity2 || !Velocity3){
+router.post('/',(req,res) => {
+    const { Velocity1, Velocity2, Velocity3}=req.body;
+    if( !Velocity1|| !Velocity2 || !Velocity3){
         return res.status(400).json({ msg : 'Please enter all fields'});}
-    if(Velocity1<0 || velocity1>126 ){
-    return 
-    res.status(400).json({msg: 'Please enter a value in the range'});}
+   
+   
+    const newVelocity =new Velocities({
+       Velocity1,
+       Velocity2,
+       Velocity3});
     
-    if(Velocity2<0 || velocity2>126 ){
-        return 
-        res.status(400).json({msg: 'Please enter a value in the range'});}
-        if(Velocity3<0 || velocity3>126 ){
-            return 
-            res.status(400).json({msg: 'Please enter a value in the range'});}
-    newVelocity.save().then(velocity =>res.json(velocity));
+    //if(Velocity1<0 || Velocity1>126 ){
+    //return res.status(400).json({msg: 'Please enter a value in the range'});}
+    
+  /* if(Velocity1 != Number){
+        return
+        res.status(400).json({msg: 'Velocities must be numbers'});}
+     
+    }*/
+   // if(Velocity2<0 || Velocity2>126 ){
+     //   return res.status(400).json({msg: 'Please enter a value in the range'});}
+       // if(Velocity3<0 || Velocity3>126 ){
+         //   return  res.status(400).json({msg : 'Please enter a value in the range'});}
+    newVelocity.save().then(velocity=>res.json(velocity));
+  
     
 });
 
 //@route delete api/items/:id
 //@desc delete an item
 //@access Private
-router.delete('/:id',auth,(req,res) => {
+router.delete('/:id',(req,res) => {
     Velocities.findById(req.params.id)
     .then(velocity => velocity.remove().then (() => res.json({success : true })) )
     .catch(err => res.status(404).json ({success : false }));

@@ -18,9 +18,7 @@ router.get('/',(req,res) => {
 //@access private
 router.post('/',auth,(req,res) => {
     const newItem =new Item({
-       name:req.body.name 
-
-    });
+       name:req.body.name  });
     newItem.save().then(item =>res.json(item));
     
 });

@@ -34,7 +34,7 @@ import{
     };
 //register user
 export const register=({name,email,password})=>(
-    dispatch: Function) => {
+    dispatch) => {
     
     //headers
     const config={
@@ -67,7 +67,7 @@ export const register=({name,email,password})=>(
 //Login User
 
 export const login=({email,password})=>(
-    dispatch: Function) => {
+    dispatch) => {
     
     //headers
     const config={
@@ -112,7 +112,7 @@ export const logout =()=>{
 
 
     //setup config/headers and token
-    export const tokenConfig =(getState:Function) =>{
+    export const tokenConfig =(getState) =>{
           
         //Get token from local storage
         const token=getState().auth.token;
@@ -123,7 +123,7 @@ export const logout =()=>{
                 "Content-type ":"application/json"
             }
         };
-        //if tokrn ,add to headers
+        //if token ,add to headers
         if(token){
             config.headers['x-auth-token']=token;
         }

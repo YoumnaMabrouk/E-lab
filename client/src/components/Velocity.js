@@ -1,5 +1,6 @@
 import React,{Component,Fragment} from 'react';
-import {Link,withRouter} from 'react-router-dom';
+import {Link,withRouter, Prompt} from 'react-router-dom';
+import {CSSTransition,TransitionGroup} from 'react-transition-group';
 import {
     Collapse,
     Navbar,
@@ -14,22 +15,57 @@ import {
     FormGroup,
     Label,
     Input,
-    Alert
+    Alert,
+    Toast, ToastBody, ToastHeader,
+    ListGroup,ListGroupItem
   } from 'reactstrap';
+  //import Velocities from './models/Velocities';
   import {connect} from 'react-redux';
   import PropTypes from 'prop-types';
-  import RegisterModal from './auth/RegisterModal';
-  import LoginModal from './auth/LoginModal';
+  //import RegisterModal from './auth/RegisterModal';
+  //import LoginModal from './auth/LoginModal';
   import Logout from './auth/Logout';
-  import {WelcomePage} from './WelcomePage';
+  //import {WelcomePage} from './WelcomePage';
+import {getVelocities,deleteVelocities,addVelocities} from '../actions/velocityAction';
+import VelocityModal from './auth/VelocityModal';
+  
 
-  class Velocity extends Component{
+
+
+
+class Velocity extends Component{
+    static propTypes={
+      getVelocities:PropTypes.func.isRequired,
+      velocity:PropTypes.object.isRequired
+     // auth :PropTypes .object.isRequired
+   // isAuthenticated:PropTypes.bool
+    }
+//componentDidUpdate(){
+  // this.props.getVelocities();
+//}
+
+    onDeleteClick =id =>{
+      this.props.deleteVelocities(id);
+    };
+  state={
+      isOpen : false
+  };
+
+toggle =() => {
+    this.setState({
+        isOpen: !this.state.isOpen
+    });
+}
   
     render(){
-        
+     //const { isAuthenticated} =this.props.auth; 
+     const { velocities } =this.props.velocity;   
         return ( 
             
-            <div>
+            <div  style={{
+              backgroundColor: 'lightgrey',
+              backgroundSize: "cover"
+            }}>
                 <p>
                 <Link to="/" >
                     Home
@@ -37,54 +73,36 @@ import {
                   </p>
                   <Navbar color="dark" dark expand="l" className="mb-5">
              
-              <Container>
+            
                 
             <NavbarBrand href="/">Parameters of experiment</NavbarBrand>
-                  <NavItem>
+                 
              <Logout/>
-            </NavItem>
+           
                   
-              </Container>
+             
             </Navbar>
-                  
+             
+            
+             
+            <div className="p-3 bg-secondary my-2 rounded">
     
-   <Form onSubmit ={this.onSubmit}>
-    <FormGroup>
-    <Label for="Velocity1">Velocity1 </Label>
-      <Input
-        type="Velocity1"
-        name="Velocity1"
-        id="Velocity1"
-        placeholder="Velocity1"
-        className='mb-3'
-        onChange={this.onChange}
-       />
+    <Toast>
+          <ToastHeader  ><font size="4">
+            Start of the experiment:
+            </font></ToastHeader>
+          <ToastBody >
+           When you press the button ,you will be asked to enter velocities of the wheels of the robot then a link of starting the experiment will appear. So you will see a video to broadcast the experiment.Hope you benefit from our E-lab :)
+          </ToastBody>
+        </Toast>
+        </div> 
+     <Container>
      
-       <Label for="Velocity2">Velocity2 </Label>
-      <Input
-        type="Velocity2"
-        name="Velocity2"
-        id="Velocity2"
-        placeholder="Velocity2"
-        className='mb-3'
-        onChange={this.onChange}
-       />
-      
-      <Label for="Velocity3">Velocity3 </Label>
-      <Input
-        type="Velocity3"
-        name="Velocity3"
-        id="Velocity3"
-        placeholder="Velocity3"
-        className='mb-3'
-        onChange={this.onChange}
-       />
-    <Button  color='dark' style={{marginTop:'2rem'}} block href="/Experiment">Start experiments</Button>
-   
+       <VelocityModal/> 
+     </Container>
+     
+             
        
-      
-       </FormGroup>
-   </Form>
 </div>
 );
 }}
@@ -92,8 +110,10 @@ import {
 
 
  
-/*const mapStateToProps =state => ({
-    auth:state.auth
-  });*/
+const mapStateToProps = (state )=> ({
+  velocity:state.velocity
+ // auth:state.auth
+  //isAuthenticated:state.auth.isAuthenticated
+  });
 //export default connect (mapStateToProps ,null)(withRouter(Velocity));
-export default (Velocity);
+export default connect(mapStateToProps ,{getVelocities,deleteVelocities,addVelocities}) (Velocity);
