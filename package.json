@@ -20,7 +20,7 @@
     "concurrently": "^5.1.0",
     "config": "^3.3.0",
     "dispatch": "^1.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "git": "^0.1.5",
     "init": "^0.1.2",
     "jsonwebtoken": "^8.5.1",
